@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,20 +19,23 @@ public class PhoneCombinationsController {
 			  produces = "application/json"
 			)
 	@ResponseBody
-	public List<String> generatePhoneCombinations(@RequestParam("phoneNumber") Integer phoneNumber) throws Exception{
-		
-		String strPhoneNumber = phoneNumber.toString();
+	public List<String> generatePhoneCombinations(@RequestParam("phoneNumber") String strPhoneNumber){
 		
 		//Validate phone length
-		if(strPhoneNumber.length() != 7 || strPhoneNumber.length() != 10) {
-			throw new Exception();
+		if(strPhoneNumber.trim().length() != 7 && strPhoneNumber.trim().length() != 10) {
+			//throw new Exception();
+			
+			  List<String> list = new ArrayList<String>();
+			  list.add(HttpStatus.BAD_REQUEST.toString());
+			  list.add("Phone number length should be either 7 or 10"); 
+			  return list;
+			 
 		}
 		
-		
-		List<String> outList =  letterCombinations(strPhoneNumber);
-		
-		int countOfCombinations = outList.size();
-		
+		List<String> outList = new ArrayList<>();
+		List<String> list =  letterCombinations(strPhoneNumber);
+		outList.add(String.valueOf(list.size()));
+		outList.addAll(list);
 		return outList;
 		
 		}
@@ -42,14 +46,14 @@ public class PhoneCombinationsController {
 		  	
 		  hashMap.put('0', "0");
 		  hashMap.put('1', "1");
-		  hashMap.put('2', "ABC");
-		  hashMap.put('3', "DEF");
-		  hashMap.put('4', "GHI");
-		  hashMap.put('5', "JKL");
-		  hashMap.put('6', "MNO");
-		  hashMap.put('7', "PQRS");
-		  hashMap.put('8', "TUV");
-		  hashMap.put('9', "WXYZ");
+		  hashMap.put('2', "2ABC");
+		  hashMap.put('3', "3DEF");
+		  hashMap.put('4', "4GHI");
+		  hashMap.put('5', "5JKL");
+		  hashMap.put('6', "6MNO");
+		  hashMap.put('7', "7PQRS");
+		  hashMap.put('8', "8TUV");
+		  hashMap.put('9', "9WXYZ");
 		
 		List<String> outputList = new ArrayList<>();
 		
