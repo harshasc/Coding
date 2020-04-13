@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<div>
+	<div lang="en"></div>
+
+	<br /> <br />
+	<div></div>
+
+	<br />
+	<hr />
+	<span th:if="${phonePage.totalPages > 0}"
+		th:each="pageNumber : ${pageNumbers}"> <a
+		th:href="@{/phoneCombinations(size=${phonePage.size}, page=${pageNumber}, phoneNumber=${phoneNumber})}"
+		th:text=${pageNumber}
+		th:class="${pageNumber==phonePage.number + 1} ? active"></a>
+	</span> <br /> <br /> <br /> <b> <span> Total Phone Numbers
+			Combinations: <span th:text="${totalphonenums}"> </span>
+	</span></b>
+	<div align="left">
+		<div class="pure-table pure-table-bordered">
+			<span th:each="phoneCombination, iStat: ${phonePage.content}">
+				<span th:if="${(iStat.count % 12) == 0 }"> <br />
+			</span> <span th:text="${phoneCombination}" />&nbsp;&nbsp;
+			</span>
+		</div>
+	</div>
+</div>
+</html>
